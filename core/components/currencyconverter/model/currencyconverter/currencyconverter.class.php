@@ -24,7 +24,6 @@
  * @author   Dan Gibbs <dan@goldcoastmedia.co.uk>
  */
 
-
 class CurrencyConverter {
 
 	public $config = array(
@@ -32,9 +31,15 @@ class CurrencyConverter {
 		'appid'             => NULL,
 		'cachelifetime'     => 1800,
 		'cachename'         => 'openexchangerates',
+		'decimalplaces'     => 2,
+		'decimalpoint'      => '.',
 		'from'              => 'USD',
 		'to'                => NULL,
 		'method'            => 'curl',
+		'moneyformat'       => FALSE,
+		'round'             => FALSE,
+		'signs'             => NULL,
+		'thousandseparator' => ',',
 		'timeout'           => 5,
 		'tpl'               => 'currencyconvert',
 		'updated'           => FALSE,
@@ -79,7 +84,65 @@ class CurrencyConverter {
 		$this->config = array_merge($this->config, $config);
 	}
 	
-	public function run() {}
+	public function run() 
+	{
+	}
+
+	/*
+	 *
+	 */
+	protected function convert()
+	{
+	}
+
+	/*
+	 *
+	 */
+	protected function format()
+	{
+	}
+
+	/**
+	 * Check and return if the feeds JSON is valid
+	 *
+	 * @param   string  $feed  the JSON feed
+	 * @return  bool
+	 */
+	protected function valid_feed($feed)
+	{
+	}
+
+	/**
+	 * Fetch from or cache or create new request
+	 *
+	 * @param   string  $name    cache name
+	 * @param   string  $life    cache lifetime
+	 * @param   string  $url     feed URL
+	 * @return  string
+	 */
+	protected function feed_cache($name, $life, $url)
+	{
+	}
+
+	/**
+	 * Build the request URL
+	 *
+	 * @return  string|bool
+	 */
+	protected function build_request_uri()
+	{
+	}
+
+	/**
+	 * Get the weather feed
+	 *
+	 * @param   string  $url     The URL
+	 * @param   string  $method  The method used to fetch the feed
+	 * @return  bool
+	 */
+	protected function get_feed($url = NULL, $method = NULL, $timeout = 5)
+	{
+	}
 
 	/**
 	* Fetch feed via cURL.
