@@ -33,6 +33,7 @@ class CurrencyConverter {
 		'cachename'         => 'openexchangerates',
 		'decimalplaces'     => 2,
 		'decimalpoint'      => '.',
+		'format'            => TRUE,
 		'from'              => 'USD',
 		'to'                => NULL,
 		'method'            => 'curl',
@@ -46,7 +47,7 @@ class CurrencyConverter {
 		'updatedformat'     => 'l jS F g:ia',
 		'updatedtpl'        => 'currencyupdate',
 	);
-	
+
 	// MODx caching options
 	public $cache_opts = array(
 		xPDO::OPT_CACHE_KEY => 'includes/elements/currencyconverter',
@@ -54,7 +55,7 @@ class CurrencyConverter {
 
 	protected $modx      = NULL;
 	protected $namespace = 'currencyconverter.';
-	protected $api_url   = '';
+	protected $api_url   = 'http://openexchangerates.org/api/latest.json?';
 
 	public function __construct(modX &$modx, array &$config)
 	{
@@ -70,7 +71,7 @@ class CurrencyConverter {
 			array('key:LIKE' => $this->namespace . '%')
 		);
 		$settings = $this->modx->getCollection('modSystemSetting', $settings);
-		
+
 		// Apply MODx manager settings
 		foreach($settings as $key => $setting) {
 			$key = str_replace($this->namespace, '', $key);
@@ -83,23 +84,141 @@ class CurrencyConverter {
 		// Merge snippet parameters and system settings with default config
 		$this->config = array_merge($this->config, $config);
 	}
-	
+
 	public function run() 
 	{
+		$url = $this->build_request_uri();
+		$feed = $this->feed_cache($this->config['cachename'], $this->config['cachelifetime'], $url);
+
+		if($this->valid_feed($feed) === FALSE)
+		{
+			$error = $this->modx->lexicon('currencyconverter.error_feed_failed');
+			$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
+		}
+		else
+		{
+			$output = NULL;
+			$feed = json_decode($feed);
+
+			// Convert
+			if($this->config['amount'] > 0 AND $this->config['to'] !== NULL)
+			{
+				$output .= $this->convert(
+					$this->config['amount'],
+					$this->config['from'],
+					$this->config['to'],
+					$this->config['signs'],
+					$feed
+				);
+			}
+
+			// Get last update
+			if($this->config['updated'] !== FALSE)
+			{
+				$updated = date($this->config['updatedformat'], $feed->timestamp);
+				$output .= $this->get_chunk($this->config['updatedtpl'], array('updated' => $updated) );
+			}
+
+			return $output;
+		}
+	}
+	
+	/**
+	 * Convert
+	 *
+	 * @param   int     $amount      the amount to convert
+	 * @param   string  $from        currency code to convert from
+	 * @param   string  $currencies  comma separated string of currency codes
+	 * @param   object  $feed        decoded JSON feed object of rates
+	 * @return  NULL|string
+	 */
+	protected function convert($amount = 0, $from = 'USD', $currencies, $signs, $feed)
+	{
+		$output = NULL;
+
+		// Make an array of currencies and currency signs
+		$currencies = $this->prepare_array($currencies);
+		$signs = $this->prepare_array($signs, '|');
+
+		foreach($currencies as $id => $currency)
+		{
+			$code = strtoupper($currency);
+
+			// Check the currency code is available
+			if(property_exists($feed->rates, $code))
+			{
+				$name = $this->modx->lexicon('currencyconverter.string_' . $code);
+				$sign = ( array_key_exists($id, $signs) AND $signs[$key] !== NULL ) ? $signs[$key] : NULL;
+				$value = $this->exchange($amount, $from, $code, $feed);
+
+				// Format the value
+				if( (bool) $this->config['format'] === TRUE)
+					$value = $this->format($value);
+
+				$properties = array(
+					'currency' => $name,
+					'sign'     => $sign,
+					'value'    => $value,
+					'code'     => $code,
+				);
+
+				$output .= $this->get_chunk($this->config['tpl'], $properties);
+			}
+			else
+			{
+				$error = $this->modx->lexicon('currencyconverter.error_unknown_code', array('code' => $code) );
+				$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
+			}
+		}
+		
+		return $output;
 	}
 
-	/*
+	/**
+	 * Currency exchange
 	 *
+	 * @param   int     $amount  the amount to convert
+	 * @param   string  $from    currency code to convert from
+	 * @param   string  $to      currency code to convert to
+	 * @param   object  $feed    decoded JSON feed object of rates
+	 * @return  int
 	 */
-	protected function convert()
+	protected function exchange($amount = 0, $from = 'USD', $to, $feed)
 	{
+		$exchange = ( ($amount / $feed->rates->$from) * $feed->rates->$to );
+		return $exchange;
 	}
 
-	/*
+	/**
+	 * Format the returned currency number
 	 *
+	 * @param   string|int|float  $value  the number/value to format
+	 * @return  string|int|float
 	 */
-	protected function format()
+	protected function format($value = 0)
 	{
+		// Rounding
+		if($this->config['round'] === 'up')
+			$value = ( is_float($value) ) ? ceil($value) : $value;
+		elseif($this->config['round'] === 'down')
+			$value = ( is_float($value) ) ? floor($value) : $value;
+
+		// Formatting
+		if($this->config['moneyformat'] !== FALSE)
+		{
+			$value = money_format($this->config['moneyformat'], $value);
+		}
+		else
+		{
+			$value = number_format(
+				$value,
+				$this->config['decimalplaces'],
+				$this->config['decimalpoint'],
+				$this->config['thousandseparator']
+			);
+		}
+		
+		return $value;
 	}
 
 	/**
@@ -110,6 +229,38 @@ class CurrencyConverter {
 	 */
 	protected function valid_feed($feed)
 	{
+		$json_feed = json_decode($feed);
+
+		if(function_exists('json_last_error'))
+		{
+			if(json_last_error() !== JSON_ERROR_NONE)
+				$json_feed = NULL;
+		}
+
+		if($feed === NULL OR $json_feed === NULL)
+		{
+			$error = $this->modx->lexicon('currencyconverter.error_parsing_feed');
+			$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
+			return FALSE;
+		}
+		else
+		{
+			// Check for feed based errors
+			if(property_exists($json_feed, 'error'))
+			{
+				$error = $this->modx->lexicon('currencyconverter.error_api', array(
+					'status'      => $json_feed->status,
+					'message'     => $json_feed->message,
+					'description' => $json_feed->description,
+				));
+
+				$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
+
+				return FALSE;
+			}
+			else
+				return TRUE;
+		}
 	}
 
 	/**
@@ -122,6 +273,21 @@ class CurrencyConverter {
 	 */
 	protected function feed_cache($name, $life, $url)
 	{
+		if($life > 0)
+		{
+			if(!$cached = $this->modx->cacheManager->get($name, $this->cache_opts))
+			{
+				$cached = $this->get_feed($url, $this->config['method'], $this->config['timeout']);
+
+				// Only cache valid feeds
+				if($this->valid_feed($cached) AND $cached !== NULL)
+					$this->modx->cacheManager->set($name, $cached, $life, $this->cache_opts);
+			}
+
+			return $cached;
+		}
+		else
+			return $this->get_feed($url, $this->config['method'], $this->config['timeout']);
 	}
 
 	/**
@@ -131,6 +297,13 @@ class CurrencyConverter {
 	 */
 	protected function build_request_uri()
 	{
+		$url_params = array(
+			'app_id' => $this->config['appid'],
+		);
+
+		$url = $this->api_url . http_build_query($url_params);
+
+		return $url;
 	}
 
 	/**
@@ -142,6 +315,17 @@ class CurrencyConverter {
 	 */
 	protected function get_feed($url = NULL, $method = NULL, $timeout = 5)
 	{
+		if( $url !== NULL )
+		{
+			$method = strtolower('fetch_' . $method);
+			return $this->$method($url, $timeout);
+		}
+		else
+		{
+			$error = $this->modx->lexicon('currencyconverter.error_fetch_feed', array('url', $url));
+			$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
+			return FALSE;
+		}
 	}
 
 	/**

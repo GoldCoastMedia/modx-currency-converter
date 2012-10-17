@@ -9,8 +9,24 @@
 $_lang['currencyconverter'] = 'Currency Converter';
 
 // Error Strings
+$_lang['currencyconverter.error_fetch_feed']   = 'Error reading [[+url]].';
+$_lang['currencyconverter.error_parsing_feed'] = 'Error parsing exchange rate feed.';
+$_lang['currencyconverter.error_feed_failed']  = 'Error reading exchange rate data. Check/change any parameters that could potentially cause this.';
+$_lang['currencyconverter.error_api']          = '[[+status]] error. [[+message]]: [[+description]]';
+$_lang['currencyconverter.error_unknown_code'] = '[[+code]] currency code unknown.';
 
 // System Settings
+$_lang['setting_currencyconverter.appid']              = 'App ID';
+$_lang['setting_currencyconverter.appid_desc']         = 'App ID for openexchangerates.org API requests.';
+
+$_lang['setting_currencyconverter.cachelifetime']      = 'Cache Lifetime';
+$_lang['setting_currencyconverter.cachelifetime_desc'] = 'The default cache lifetime for currency exchange rates. IMPORTANT: If you are using the \'free plan\' you are limited to a maximum of 1000 API request per month (approximately 1.3 requests per hour).';
+
+$_lang['setting_currencyconverter.defaultcurrency']      = 'Base Currency';
+$_lang['setting_currencyconverter.defaultcurrency_desc'] = 'A currency code to be used by default. E.g. GBP, USD, EUR, JPY.';
+
+$_lang['setting_currencyconverter.timeout']            = 'Connection Timeout';
+$_lang['setting_currencyconverter.timeout_desc']       = 'The maximum number of seconds before an API connection times out.';
 
 // Currency Strings
 $_lang['currencyconverter.string_AED'] = 'United Arab Emirates Dirham';
