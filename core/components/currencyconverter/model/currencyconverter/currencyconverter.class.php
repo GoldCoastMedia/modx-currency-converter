@@ -128,7 +128,8 @@ class CurrencyConverter {
 	 *
 	 * @param   int     $amount      the amount to convert
 	 * @param   string  $from        currency code to convert from
-	 * @param   string  $currencies  comma separated string of currency codes
+	 * @param   array   $currencies  comma separated string of currency codes
+	 * @param   string  $signs       comma separated string of currency signs
 	 * @param   object  $feed        decoded JSON feed object of rates
 	 * @return  NULL|string
 	 */
@@ -170,7 +171,7 @@ class CurrencyConverter {
 				$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
 			}
 		}
-		
+
 		return $output;
 	}
 
@@ -198,9 +199,9 @@ class CurrencyConverter {
 	protected function format($value = 0)
 	{
 		// Rounding
-		if($this->config['round'] === 'up')
+		if( strtolower($this->config['round']) === 'up')
 			$value = ( is_float($value) ) ? ceil($value) : $value;
-		elseif($this->config['round'] === 'down')
+		elseif( strtolower($this->config['round']) === 'down')
 			$value = ( is_float($value) ) ? floor($value) : $value;
 
 		// Formatting
@@ -217,7 +218,7 @@ class CurrencyConverter {
 				$this->config['thousandseparator']
 			);
 		}
-		
+
 		return $value;
 	}
 
@@ -307,7 +308,7 @@ class CurrencyConverter {
 	}
 
 	/**
-	 * Get the weather feed
+	 * Get the exchange rate
 	 *
 	 * @param   string  $url     The URL
 	 * @param   string  $method  The method used to fetch the feed
@@ -322,7 +323,7 @@ class CurrencyConverter {
 		}
 		else
 		{
-			$error = $this->modx->lexicon('currencyconverter.error_fetch_feed', array('url', $url));
+			$error = $this->modx->lexicon('currencyconverter.error_fetch_feed', array('url', $url) );
 			$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
 			return FALSE;
 		}
@@ -357,7 +358,7 @@ class CurrencyConverter {
 	*/
 	protected function fetch_file_get_contents($url, $timeout = 5)
 	{
-		$sc = stream_context_create(array('http' => array('timeout' => (int) $timeout)));
+		$sc = stream_context_create( array('http' => array('timeout' => (int) $timeout)) );
 		$feed = file_get_contents($url, FALSE, $sc);
 		return $feed;
 	}
@@ -385,7 +386,7 @@ class CurrencyConverter {
 	{
 		if( !is_array($stylesheets))
 		{
-			$stylesheet = str_split($stylesheet, strlen($stylesheet));
+			$stylesheet = str_split($stylesheet, strlen($stylesheet) );
 		}
 
 		foreach ($stylesheets as $css)
@@ -402,9 +403,8 @@ class CurrencyConverter {
 	 */	
 	protected function prepare_array($string, $separator = ',')
 	{
-		$csv = array_map('trim', explode($separator , $string));
+		$csv = array_map('trim', explode($separator , $string) );
 		$csv = ( is_array($csv) ) ? $csv : FALSE;
-
 		return $csv;
 	}
 }
