@@ -1,6 +1,0 @@
-Changelog for Currency Converter (MODx Revolution)
-
-1.0.0-beta
-========== 
-- Initial public release
-
