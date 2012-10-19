@@ -24,21 +24,4 @@
  * @author   Dan Gibbs <dan@goldcoastmedia.co.uk>
  */
  
-class CurrencyTable extends CurrencyConverter {
-
-	public $config = array(
-		'include' => 'all',
-		'rowtpl'  => 'currencyconvert',
-		'tpl'     => 'currencyconvert',
-	);
-	
-	protected function generate()
-	{
-		$ouput = NULL;
-		$feed = json_decode($this->feed_cache());
-		
-		print_r($feed);
-	}
-	
-	
-}
+class CurrencyTable { }

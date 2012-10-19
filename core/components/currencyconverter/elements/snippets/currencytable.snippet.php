@@ -24,16 +24,3 @@
  * @author  Dan Gibbs <dan@goldcoastmedia.co.uk>
  */
 
-
-require_once $modx->getOption('core_path') . 'components/currencyconverter/model/currencyconverter/currencyconverter.class.php';
-$cc = new CurrencyConverter($modx, array());
-
-
-require_once $modx->getOption('core_path') . 'components/currencyconverter/model/currencyconverter/currencytable.class.php';
-$ct = new CurrencyTable();
-
-$result = $ct->generate();
-unset($cc, $ct);
-
-return $result;
-
