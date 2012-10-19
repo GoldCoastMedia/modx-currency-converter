@@ -20,13 +20,13 @@ $_lang['setting_currencyconverter.appid']              = 'App ID';
 $_lang['setting_currencyconverter.appid_desc']         = 'App ID for openexchangerates.org API requests.';
 
 $_lang['setting_currencyconverter.cachelifetime']      = 'Cache Lifetime';
-$_lang['setting_currencyconverter.cachelifetime_desc'] = 'The default cache lifetime (in seconds) for currency exchange rates. IMPORTANT: If you are using the \'free plan\' you are limited to a maximum of 1000 API request per month (approximately 1.3 requests per hour).';
+$_lang['setting_currencyconverter.cachelifetime_desc'] = 'The default cache lifetime for currency exchange rates. IMPORTANT: If you are using the \'free plan\' you are limited to a maximum of 1000 API request per month (approximately 1.3 requests per hour).';
 
 $_lang['setting_currencyconverter.defaultcurrency']      = 'Base Currency';
-$_lang['setting_currencyconverter.defaultcurrency_desc'] = 'A currency code to be used by default (e.g. GBP, USD, EUR, JPY).';
+$_lang['setting_currencyconverter.defaultcurrency_desc'] = 'A currency code to be used by default. E.g. GBP, USD, EUR, JPY.';
 
 $_lang['setting_currencyconverter.timeout']            = 'Connection Timeout';
-$_lang['setting_currencyconverter.timeout_desc']       = 'The maximum number of seconds before an API request times out.';
+$_lang['setting_currencyconverter.timeout_desc']       = 'The maximum number of seconds before an API connection times out.';
 
 // Currency Strings
 $_lang['currencyconverter.string_AED'] = 'United Arab Emirates Dirham';
@@ -189,6 +189,7 @@ $_lang['currencyconverter.string_ZAR'] = 'South African Rand';
 $_lang['currencyconverter.string_ZMK'] = 'Zambian Kwacha';
 $_lang['currencyconverter.string_ZWL'] = 'Zimbabwean Dollar';
 
+د.إ
 // Decimal Unicode Currency Symbols
 $_lang['currencyconverter.symbol_AED'] = '&#1583;.&#1573;'; // ?
 $_lang['currencyconverter.symbol_AFN'] = '&#65;&#102;';

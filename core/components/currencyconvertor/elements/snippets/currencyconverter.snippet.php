@@ -24,7 +24,7 @@
  * @author  Dan Gibbs <dan@goldcoastmedia.co.uk>
  */
 
-require_once $modx->getOption('core_path') . 'components/currencyconverter/model/currencyconverter/currencyconverter.class.php';
+require_once $modx->getOption('core_path') . 'components/currencyconvertor/model/currencyconvertor/currencyconvertor.class.php';
 $cc = new CurrencyConverter($modx, $scriptProperties);
 
 $result = $cc->run();

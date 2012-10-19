@@ -1,6 +1,6 @@
 <?php
 /**
- * Currency Convertor
+ * Currency Table
  *
  * Copyright (c) 2012 Gold Coast Media Ltd
  *
@@ -24,11 +24,16 @@
  * @author  Dan Gibbs <dan@goldcoastmedia.co.uk>
  */
 
-require_once $modx->getOption('core_path') . 'components/currencyconverter/model/currencyconverter/currencyconverter.class.php';
-$cc = new CurrencyConverter($modx, $scriptProperties);
 
-$result = $cc->run();
-unset($cc);
+require_once $modx->getOption('core_path') . 'components/currencyconverter/model/currencyconverter/currencyconverter.class.php';
+$cc = new CurrencyConverter($modx, array());
+
+
+require_once $modx->getOption('core_path') . 'components/currencyconverter/model/currencyconverter/currencytable.class.php';
+$ct = new CurrencyTable();
+
+$result = $ct->generate();
+unset($cc, $ct);
 
 return $result;
 

@@ -28,9 +28,12 @@ http://www.goldcoastmedia.co.uk/tools/modx-currency-converter/
 Example Calls
 -------------
 Convert 250 GBP to Euro
+
 ```[[!CurrencyConverter? &from=`GBP` &amount=`250` &to=`EUR`]]```
 
 A complete example (note that &signs is experimental):
-```[[!CurrencyConverter? &from=`GBP` &amount=`1` &to=`KWD,OMR,GBP,USD,EUR,JPY,SOS,IRR` &signs=`||£|$|€|¥||`  &decimal=`2`]]```
 
-Gold Coast Media Ltd
+```[[!CurrencyConverter? &from=`GBP` &amount=`1` &to=`KWD,OMR,GBP,USD,EUR,JPY,SOS,IRR` &signs=`||£|$|€|¥||`]]```
+
+
+**Gold Coast Media Ltd**

@@ -39,6 +39,7 @@ class CurrencyConverter {
 		'method'            => 'curl',
 		'moneyformat'       => FALSE,
 		'round'             => FALSE,
+		'signs'             => NULL,
 		'thousandseparator' => ',',
 		'timeout'           => 5,
 		'tpl'               => 'currencyconvert',
@@ -106,6 +107,7 @@ class CurrencyConverter {
 					$this->config['amount'],
 					$this->config['from'],
 					$this->config['to'],
+					$this->config['signs'],
 					$feed
 				);
 			}
@@ -127,15 +129,17 @@ class CurrencyConverter {
 	 * @param   int     $amount      the amount to convert
 	 * @param   string  $from        currency code to convert from
 	 * @param   array   $currencies  comma separated string of currency codes
+	 * @param   string  $signs       comma separated string of currency signs
 	 * @param   object  $feed        decoded JSON feed object of rates
 	 * @return  NULL|string
 	 */
-	protected function convert($amount = 0, $from = 'USD', $currencies, $feed)
+	protected function convert($amount = 0, $from = 'USD', $currencies, $signs, $feed)
 	{
 		$output = NULL;
 
-		// Make an array from CSV list of currencies
+		// Make an array of currencies and currency signs
 		$currencies = $this->prepare_array($currencies);
+		$signs = $this->prepare_array($signs, '|');
 
 		foreach($currencies as $id => $currency)
 		{
@@ -145,7 +149,7 @@ class CurrencyConverter {
 			if(property_exists($feed->rates, $code))
 			{
 				$name = $this->modx->lexicon('currencyconverter.string_' . $code);
-				$symbol = $this->modx->lexicon('currencyconverter.symbol_' . $code);
+				$sign = ( array_key_exists($id, $signs) AND $signs[$key] !== NULL ) ? $signs[$key] : NULL;
 				$value = $this->exchange($amount, $from, $code, $feed);
 
 				// Format the value
@@ -154,7 +158,7 @@ class CurrencyConverter {
 
 				$properties = array(
 					'currency' => $name,
-					'symbol'   => $symbol,
+					'sign'     => $sign,
 					'value'    => $value,
 					'code'     => $code,
 				);

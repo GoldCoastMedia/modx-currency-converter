@@ -18,4 +18,12 @@ $snippets[1]->fromArray(array(
     'snippet' => getSnippetContent($sources['source_core'].'/elements/snippets/currencyconverter.snippet.php'),
 ),'',true,true);
 
+$snippets[2]= $modx->newObject('modSnippet');
+$snippets[2]->fromArray(array(
+    'id' => 2,
+    'name' => 'CurrencyTable',
+    'description' => 'CurrencyTable generator snippet',
+    'snippet' => getSnippetContent($sources['source_core'].'/elements/snippets/currencytable.snippet.php'),
+),'',true,true);
+
 return $snippets;
