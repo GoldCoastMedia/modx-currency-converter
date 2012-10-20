@@ -1,6 +1,6 @@
 <?php
 /**
- * Currency Convertor
+ * Currency Converter
  *
  * Copyright (c) 2012 Gold Coast Media Ltd
  *
@@ -20,7 +20,7 @@
  * Currency Convertor; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * @package currencyconvertor
+ * @package currencyconverter
  * @author  Dan Gibbs <dan@goldcoastmedia.co.uk>
  */
 

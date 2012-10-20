@@ -27,17 +27,17 @@
 class CurrencyConverter {
 
 	public $config = array(
-		'amount'            => 0,
+		'amount'            => 1,
 		'appid'             => NULL,
 		'cachelifetime'     => 1800,
 		'cachename'         => 'openexchangerates',
 		'decimalplaces'     => 2,
 		'decimalpoint'      => '.',
-		'format'            => TRUE,
 		'from'              => 'USD',
 		'to'                => NULL,
 		'method'            => 'curl',
 		'moneyformat'       => FALSE,
+		'output'            => TRUE,
 		'round'             => FALSE,
 		'thousandseparator' => ',',
 		'timeout'           => 5,
@@ -100,7 +100,7 @@ class CurrencyConverter {
 			$feed = json_decode($feed);
 
 			// Convert
-			if($this->config['amount'] > 0 AND $this->config['to'] !== NULL)
+			if($this->config['output'] AND $this->config['amount'] > 0 AND $this->config['to'] !== NULL)
 			{
 				$output .= $this->convert(
 					$this->config['amount'],
@@ -139,31 +139,30 @@ class CurrencyConverter {
 
 		foreach($currencies as $id => $currency)
 		{
-			$code = strtoupper($currency);
+			// Currency codes must be uppercase
+			$from = strtoupper($from);
+			$currency = strtoupper($currency);
 
 			// Check the currency code is available
-			if(property_exists($feed->rates, $code))
+			if(property_exists($feed->rates, $currency))
 			{
-				$name = $this->modx->lexicon('currencyconverter.string_' . $code);
-				$symbol = $this->modx->lexicon('currencyconverter.symbol_' . $code);
-				$value = $this->exchange($amount, $from, $code, $feed);
-
-				// Format the value
-				if( (bool) $this->config['format'] === TRUE)
-					$value = $this->format($value);
-
+				$name = $this->modx->lexicon('currencyconverter.string_' . $currency);
+				$symbol = $this->modx->lexicon('currencyconverter.symbol_' . $currency);
+				$value = $this->exchange($amount, $from, $currency, $feed);
+				$value = $this->format($value);
+				
 				$properties = array(
 					'currency' => $name,
 					'symbol'   => $symbol,
 					'value'    => $value,
-					'code'     => $code,
+					'code'     => $currency,
 				);
-
+				
 				$output .= $this->get_chunk($this->config['tpl'], $properties);
 			}
 			else
 			{
-				$error = $this->modx->lexicon('currencyconverter.error_unknown_code', array('code' => $code) );
+				$error = $this->modx->lexicon('currencyconverter.error_unknown_code', array('code' => $currency) );
 				$this->modx->log(modX::LOG_LEVEL_DEBUG, $error);
 			}
 		}

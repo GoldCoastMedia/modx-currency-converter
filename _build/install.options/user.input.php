@@ -3,7 +3,7 @@ $output = '
 <p>Please enter your <strong>Open Exchange Rates App ID</strong>.</p>
 <br />
 <p><small>If you do not have one you can 
-sign up for one at quickly and easily at <a href="https://openexchangerates.org/signup">https://openexchangerates.org/signup</a>.</small></p>
+sign up for one at quickly and easily at <a href="https://openexchangerates.org/signup/free">https://openexchangerates.org/signup/free</a>.</small></p>
 <br />
 <p><small><strong>NOTE: If you are upgrading this extension and already have an App ID in use key you can leave this blank.</strong></small></p>
 <br />

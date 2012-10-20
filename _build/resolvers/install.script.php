@@ -28,7 +28,7 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
 			$setting->set('key', 'currencyconverter.appid');
 			$setting->set('description', 'setting_currencyconverter.appid_desc');
 			$setting->set('value', $apikey);
-			$setting->set('namespace', 'appid');
+			$setting->set('namespace', 'currencyconverter');
 			$setting->set('area', 'API');
 			$setting->set('xtype', 'text-password');
 			$setting->save();

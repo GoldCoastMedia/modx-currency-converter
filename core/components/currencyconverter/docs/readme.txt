@@ -3,7 +3,7 @@ Currency Converter
 Version: 1.0.0-beta (2012-10-17)
 Authors: Dan Gibbs <dan@goldcoastmedia.co.uk>
 
-Converts currencies using the openexchangerates API.
+Convert multiple currencies using the openexchangerates API.
 
 You must register for an App ID at https://openexchangerates.org/signup/free
 
