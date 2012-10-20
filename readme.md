@@ -42,8 +42,6 @@ Calling the snippet without any parameters will not produce any output. It will 
 currency exchange rate if the cache has expired. This can be used to update the currency exchange
 rates via a cron job.
 
-```[[!CurrencyConverter]]```
-
 Format the currency output:
 
 ```[[!CurrencyConverter? &amount=`80` &from=`GBP`  &to=`IRR` &decimalplaces=`2` &decimalpoint=`,` &thousandseparator=`.`]]```
