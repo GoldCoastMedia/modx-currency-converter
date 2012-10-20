@@ -24,12 +24,16 @@ http://www.goldcoastmedia.co.uk/tools/modx-currency-converter/
 
 Basic Example Calls
 -------------------
+NOTE: All parameters are *not* case-sensitive.
 
 Convert 1 GBP to USD,EUR,JPY
 ```[[!CurrencyConverter? &from=`GBP`  &to=`USD,EUR,JPY`]]```
 
 Convert 250 USD to GBP
 ```[[!CurrencyConverter? &amount=`250` &from=`USD`  &to=`GBP`]]```
+
+Convert 1000 GBP to all available currencies
+```[[!CurrencyConverter? &amount=`1000` &from=`GBP` &to=`*`]]```
 
 Calling the snippet without any parameters will not produce any output. It will however update the 
 currency exchange rate if the cache has expired. This can be used to update the currency exchange
