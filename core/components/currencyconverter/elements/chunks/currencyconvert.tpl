@@ -1,2 +1,2 @@
-<p><strong>[[+code]]</strong>[[+value]] ([[+currency]] [[+symbol]])</p>
+<p>[[+symbol]][[+value]] [[+code]] ([[+currency]])</p>
 

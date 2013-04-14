@@ -17,6 +17,9 @@ $snippets[1]->fromArray(array(
     'description' => 'CurrencyConverter snippet',
     'snippet' => getSnippetContent($sources['source_core'].'/elements/snippets/currencyconverter.snippet.php'),
 ),'',true,true);
+$properties = include $sources['data'].'/properties/properties.currencyconverter.php';
+$snippets[1]->setProperties($properties);
+unset($properties);
 
 $snippets[2]= $modx->newObject('modSnippet');
 $snippets[2]->fromArray(array(
@@ -25,5 +28,7 @@ $snippets[2]->fromArray(array(
     'description' => 'CurrencyTable generator snippet',
     'snippet' => getSnippetContent($sources['source_core'].'/elements/snippets/currencytable.snippet.php'),
 ),'',true,true);
-
+$properties = include $sources['data'].'/properties/properties.currencytable.php';
+$snippets[2]->setProperties($properties);
+unset($properties);
 return $snippets;

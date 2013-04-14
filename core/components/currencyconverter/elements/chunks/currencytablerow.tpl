@@ -1,6 +1,7 @@
 <tr>
-	<td>[[+code]]</td>
 	<td>[[+symbol]]</td>
-	<td>[[+currency]]</td>
 	<td>[[+value]]</td>
+	<td>[[+code]]</td>
+	<td>[[+currency]]</td>
 </tr>
+

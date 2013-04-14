@@ -7,7 +7,7 @@ $chunks[1]->fromArray(array(
     'name' => 'currencyconvert',
     'description' => 'The output for each converted currency via the &tpl=`` snippet method.',
     'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/currencyconvert.tpl'),
-    'properties' => '',
+    'properties' => include $sources['data'].'/properties/properties.currencyconvert.chunk.php',
 ),'',true,true);
 
 $chunks[2]= $modx->newObject('modChunk');
@@ -16,7 +16,7 @@ $chunks[2]->fromArray(array(
     'name' => 'currencyupdate',
     'description' => 'The output for the last time the cached exchange rate was updated. This is called via the &updated=`1` snippet method and the chunk set via &updatetpl=`` ',
     'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/currencyupdate.tpl'),
-    'properties' => '',
+    'properties' => include $sources['data'].'/properties/properties.currencyupdate.chunk.php',
 ),'',true,true);
 
 $chunks[3]= $modx->newObject('modChunk');
@@ -25,7 +25,7 @@ $chunks[3]->fromArray(array(
     'name' => 'currencytable',
     'description' => '',
     'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/currencytable.tpl'),
-    'properties' => '',
+    'properties' => include $sources['data'].'/properties/properties.currencytable.chunk.php',
 ),'',true,true);
 
 $chunks[4]= $modx->newObject('modChunk');
@@ -34,7 +34,7 @@ $chunks[4]->fromArray(array(
     'name' => 'currencytablerow',
     'description' => '',
     'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/currencytablerow.tpl'),
-    'properties' => '',
+    'properties' => include $sources['data'].'/properties/properties.currencytablerow.chunk.php',
 ),'',true,true);
 
 return $chunks;

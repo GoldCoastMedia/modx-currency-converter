@@ -32,11 +32,11 @@ NOTE: All parameters are *not* case-sensitive.
 
 **Convert 250 USD to GBP**
 
-```[[!CurrencyConverter? &amount=`250` &from=`USD`  &to=`GBP`]]```
+```[[!CurrencyConverter?  &amount=`250`  &from=`USD`  &to=`GBP`]]```
 
 **Convert 1000 GBP to all available currencies**
 
-```[[!CurrencyConverter? &amount=`1000` &from=`GBP` &to=`*`]]```
+```[[!CurrencyConverter?  &amount=`1000`  &from=`GBP`  &to=`*`]]```
 
 *Calling the snippet without any parameters will not produce any output. It will however update the 
 currency exchange rate if the cache has expired. This can be used to update the currency exchange
@@ -44,31 +44,31 @@ rates via a cron job.*
 
 **Format the currency output:**
 
-```[[!CurrencyConverter? &amount=`80` &from=`GBP`  &to=`IRR` &decimalplaces=`2` &decimalpoint=`,` &thousandseparator=`.`]]```
+```[[!CurrencyConverter?  &amount=`80`  &from=`GBP`  &to=`IRR`  &decimalplaces=`2`  &decimalpoint=`,`  &thousandseparator=`.`]]```
 
 **Change the template (chunk) to use:**
 
-```[[!CurrencyConverter? &amount=`20` &to=`LYD` &tpl=`some_other_chunk`]]```
+```[[!CurrencyConverter?  &amount=`20`  &to=`LYD`  &tpl=`some_other_chunk`]]```
 
 **Round up:**
 
-```[[!CurrencyConverter? &from=`IRR`  &to=`AUD` &round=`up`]]```
+```[[!CurrencyConverter?  &from=`IRR`  &to=`AUD`  &round=`up`]]```
 
 **Round down:**
 
-```[[!CurrencyConverter? &from=`GIP`  &to=`KWD` &round=`down`]]```
+```[[!CurrencyConverter?  &from=`GIP`  &to=`KWD`  &round=`down`]]```
 
 **Change cURL to file_get_contents:**
 
-```[[!CurrencyConverter? &method=`file_get_contents` &amount=`10` &from=`EGP`  &to=`GBP`]]```
+```[[!CurrencyConverter?  &method=`file_get_contents`  &amount=`10`  &from=`EGP`  &to=`GBP`]]```
 
 **Disable snippet output:**
 
-```[[!CurrencyConverter? &output=`0`]]```
+```[[!CurrencyConverter?  &output=`0`]]```
 
 **Output the currency exchange update time:**
 
-```[[!CurrencyConverter? &updated=`1`]]```
+```[[!CurrencyConverter?  &updated=`1`]]```
 
 
 Advanced Example Calls

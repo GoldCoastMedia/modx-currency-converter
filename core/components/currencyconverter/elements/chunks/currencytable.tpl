@@ -1,10 +1,10 @@
 <table>
 	<thead>
 		<tr>
-			<td>Code</td>
-			<td>Symbol</td>
-			<td>Currency</td>
-			<td>Value</td>
+			<th>Symbol</th>
+			<th>Value</th>
+			<th>Code</th>
+			<th>Currency</th>
 		</tr>
 	</thead>
 	
@@ -12,3 +12,4 @@
 		[[+currencytabledata]]
 	</tbody>
 </table>
+

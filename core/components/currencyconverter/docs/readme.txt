@@ -1,9 +1,9 @@
 Currency Converter
 ==================
-Version: 1.0.0-beta (2012-10-21)
+Version: 1.0.0-beta (2012-11-14)
 Authors: Dan Gibbs <dan@goldcoastmedia.co.uk>
 
-Currency converter that uses exchange rates from over 150 different currencies.
+Currency converter snippet that uses exchange rates from over 150 different currencies.
 
 Convert to single or multiple currencies. Uses the free openexchangerates.org API for
 the latest exchange rates from around the globe.

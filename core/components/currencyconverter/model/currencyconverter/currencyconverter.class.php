@@ -34,7 +34,7 @@ class CurrencyConverter {
 		'decimalplaces'     => 2,
 		'decimalpoint'      => '.',
 		'from'              => 'USD',
-		'to'                => NULL,
+		'to'                => 'EUR',
 		'method'            => 'curl',
 		'moneyformat'       => FALSE,
 		'output'            => TRUE,
@@ -59,7 +59,7 @@ class CurrencyConverter {
 	public function __construct(modX &$modx, array &$config)
 	{
 		$this->modx =& $modx;
-		$this->modx->setLogLevel(modX::LOG_LEVEL_DEBUG);
+		//$this->modx->setLogLevel(modX::LOG_LEVEL_DEBUG);
 		$this->modx->lexicon->load('currencyconverter:default');
 
 		// Force all parameters to lowercase
@@ -86,8 +86,7 @@ class CurrencyConverter {
 
 	public function run() 
 	{
-		$url = $this->build_request_uri();
-		$feed = $this->feed_cache($this->config['cachename'], $this->config['cachelifetime'], $url);
+		$feed = $this->fetch_feed();
 
 		if($this->valid_feed($feed) === FALSE)
 		{
@@ -120,6 +119,19 @@ class CurrencyConverter {
 			return $output;
 		}
 	}
+
+	/**
+	 * Fetches the feed
+	 *
+	 * @return  feed
+	 */
+	protected function fetch_feed()
+	{
+		$url = $this->build_request_uri();
+		$feed = $this->feed_cache($this->config['cachename'], $this->config['cachelifetime'], $url);
+		
+		return $feed;
+	}
 	
 	/**
 	 * Convert
@@ -150,14 +162,14 @@ class CurrencyConverter {
 				$symbol = $this->modx->lexicon('currencyconverter.symbol_' . $currency);
 				$value = $this->exchange($amount, $from, $currency, $feed);
 				$value = $this->format($value);
-				
+
 				$properties = array(
 					'currency' => $name,
 					'symbol'   => $symbol,
 					'value'    => $value,
 					'code'     => $currency,
 				);
-				
+
 				$output .= $this->get_chunk($this->config['tpl'], $properties);
 			}
 			else
@@ -200,7 +212,7 @@ class CurrencyConverter {
 			$value = ( is_float($value) ) ? floor($value) : $value;
 
 		// Formatting
-		if($this->config['moneyformat'] !== FALSE)
+		if( !empty($this->config['moneyformat']) )
 		{
 			$value = money_format($this->config['moneyformat'], $value);
 		}
