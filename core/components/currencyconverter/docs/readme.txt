@@ -16,6 +16,6 @@ https://github.com/GoldCoastMedia/modx-currency-converter
 Documentation
 -------------
 Full detailed documentation available at: 
-http://www.goldcoastmedia.co.uk/tools/modx-currency-converter/
+http://www.goldcoastmedia.co.uk/tools/modx/currency-converter/
 
 Gold Coast Media Ltd

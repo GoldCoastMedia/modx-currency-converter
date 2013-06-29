@@ -1,10 +1,10 @@
 <table>
 	<thead>
 		<tr>
-			<th>Symbol</th>
-			<th>Value</th>
-			<th>Code</th>
-			<th>Currency</th>
+			<td>Symbol</td>
+			<td>Value</td>
+			<td>Code</td>
+			<td>Currency</td>
 		</tr>
 	</thead>
 	
