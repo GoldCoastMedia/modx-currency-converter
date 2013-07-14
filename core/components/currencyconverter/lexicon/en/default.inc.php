@@ -22,6 +22,9 @@ $_lang['setting_currencyconverter.appid_desc']         = 'App ID for openexchang
 $_lang['setting_currencyconverter.cachelifetime']      = 'Cache Lifetime';
 $_lang['setting_currencyconverter.cachelifetime_desc'] = 'The default cache lifetime (in seconds) for currency exchange rates. IMPORTANT: If you are using the \'free plan\' you are limited to a maximum of 1000 API request per month (approximately 1.3 requests per hour).';
 
+$_lang['setting_currencyconverter.debug']      = 'Debug';
+$_lang['setting_currencyconverter.debug_desc'] = 'Enable debugging (log messages)';
+
 $_lang['setting_currencyconverter.defaultcurrency']      = 'Base Currency';
 $_lang['setting_currencyconverter.defaultcurrency_desc'] = 'A currency code to be used by default (e.g. GBP, USD, EUR, JPY).';
 

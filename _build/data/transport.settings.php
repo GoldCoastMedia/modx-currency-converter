@@ -26,6 +26,16 @@ $settings['setting_currencyconverter.cachelifetime']->fromArray(array (
 	'xtype' => 'textfield',
 ), '', true, true);
 
+$settings['setting_currencyconverter.debug']= $modx->newObject('modSystemSetting');
+$settings['setting_currencyconverter.debug']->fromArray(array (
+	'key' => 'currencyconverter.debug',
+	'description' => 'setting_currencyconverter.debug_desc',
+	'value' => FALSE,
+	'namespace' => 'currencyconverter',
+	'area' => 'API',
+	'xtype' => 'textfield',
+), '', true, true);
+
 $settings['setting_currencyconverter.defaultcurrency']= $modx->newObject('modSystemSetting');
 $settings['setting_currencyconverter.defaultcurrency']->fromArray(array (
 	'key' => 'currencyconverter.defaultcurrency',

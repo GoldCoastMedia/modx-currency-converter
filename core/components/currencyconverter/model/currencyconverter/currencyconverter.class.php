@@ -82,6 +82,10 @@ class CurrencyConverter {
 
 		// Merge snippet parameters and system settings with default config
 		$this->config = array_merge($this->config, $config);
+		
+		// Enable debugging
+		if($this->config['debug'])
+			$this->modx->setLogLevel(modX::LOG_LEVEL_DEBUG);
 	}
 
 	public function run() 
